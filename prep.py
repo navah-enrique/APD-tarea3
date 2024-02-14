@@ -83,5 +83,3 @@ df_test.head()
 #Creamos csvs de la data limpia
 df.to_csv('data/clean_train.csv', index=False)
 df_test.to_csv('data/clean_inference.csv', index=False)
-
-
