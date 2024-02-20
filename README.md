@@ -7,9 +7,9 @@ La estructura del repositorio es como sigue:
 
 - data: contiene los archivos csv tanto crudos como preparados para entrenar el modelo, así como el archivo de entrada para realizar la inferencia  y el archivo de predicciones de salida.
 
-- Artifacts: contiene el modelo entrenado.
+- artifacts: contiene el modelo entrenado.
 
-- prep.py: la entrada del script son datos data/raw. La salida del script son datos prep
+- prep.py: la entrada del script son datos data/raw. La salida del script son datos clean.
 
 - train.py: la entrada del script son datos data/clean. La salida del script es el modelo entrenado model.joblib
 
