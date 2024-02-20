@@ -104,5 +104,6 @@ plt.show()
 
 # %%
 # Guardamos modelo
-filename = 'artifacts/model.joblib'
-joblib.dump(model, filename)
+joblib.dump(model, 'artifacts/model.joblib')
+# Guardamos scaler
+joblib.dump(std, 'artifacts/std.joblib')
