@@ -1,17 +1,23 @@
 """
 Script: prep.py
 
-Este script está diseñado para preparar y limpiar conjuntos de datos para una tarea de regresión, específicamente para la competencia de Kaggle
-"Housing Prices: Advanced Regression Techniques" (https://www.kaggle.com/c/house-prices-advanced-regression-techniques).
+Este script está diseñado para preparar y limpiar conjuntos de datos para
+una tarea de regresión, específicamente para la competencia de Kaggle
+"Housing Prices: Advanced Regression Techniques"
+(https://www.kaggle.com/c/house-prices-advanced-regression-techniques).
 
-El script incluye funciones para importar datos, manejar valores faltantes, codificar características categóricas usando
-OrdinalEncoder, y guardar los conjuntos de datos limpios como archivos CSV.
+El script incluye funciones para importar datos, manejar valores faltantes,
+codificar características categóricas usando OrdinalEncoder, y guardar los
+ conjuntos de datos limpios como archivos CSV.
 
 Uso:
-1. Descarga los datos de la competencia desde: https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/
-2. Coloca los archivos 'raw_train.csv' y 'raw_inference.csv' en el directorio 'data'.
+1. Descarga los datos de la competencia desde:
+https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/
+2. Coloca los archivos 'raw_train.csv' y 'raw_inference.csv'
+en el directorio 'data'.
 3. Ejecuta el script para limpiar y preparar los datos.
-4. Los conjuntos de datos limpios 'clean_train.csv' y 'clean_inference.csv' se guardarán en el directorio 'data'.
+4. Los conjuntos de datos limpios 'clean_train.csv' y 'clean_inference.csv'
+se guardarán en el directorio 'data'.
 
 Funciones:
 1. importar_datos():
@@ -19,51 +25,40 @@ Funciones:
    - Elimina la columna 'Id' de ambos conjuntos de datos.
 
 2. manejar_valores_faltantes(df, df_test):
-   - Maneja valores faltantes en el DataFrame de entrada y en el DataFrame para inferencia.
+   - Maneja valores faltantes en el DataFrame de entrada
+   y en el DataFrame para inferencia.
    - Rellena las columnas numéricas con 0 y las columnas categóricas con "N/A".
 
 3. codificar_caracteristicas_ordinarias(df, df_test):
-   - Aplica OrdinalEncoder a las características categóricas en el DataFrame de entrada y en el DataFrame para inferencia.
-   - Concatena ambos DataFrames, ajusta el codificador en el conjunto de datos combinado y transforma ambos DataFrames.
+   - Aplica OrdinalEncoder a las características categóricas en el DataFrame
+   de entrada y en el de inferencia.
+   - Concatena ambos DataFrames, ajusta el codificador en el conjunto de datos
+   combinado y transforma ambos DataFrames.
 
 4. guardar_conjuntos_datos_limpios(df, df_test):
-   - Guarda los conjuntos de datos de entrenamiento e inferencia limpios como 'clean_train.csv' y 'clean_inference.csv'.
+   - Guarda los conjuntos de datos de entrenamiento e inferencia limpios
+   como 'clean_train.csv' y 'clean_inference.csv'.
 
 Dependencias:
-- numpy
 - pandas
-- matplotlib
-- seaborn
 - scikit-learn
 """
 
 # %%
-#Importamos librerias
-import numpy as np
+# Importamos librerias
 import pandas as pd
-import matplotlib.pyplot as plt
-import math
-import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import LinearRegression
-from sklearn.feature_selection import RFE
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
-#import statsmodels.api as sm
-#from sklearn.linear_model import Ridge
-#from sklearn.linear_model import Lasso
-#from sklearn.linear_model import ElasticNet
 from sklearn.preprocessing import OrdinalEncoder
 
 # %%
-#Guardamos datos de entrenamiento (en la fuente ya vienen separados los archivos de entrenamiento y de test)
-# La data se puede descargar desde https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/
+# Guardamos datos de entrenamiento
+# (en la fuente ya vienen separados los archivos de entrenamiento y de test)
+# La data se puede descargar desde
+# https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/
 df = pd.read_csv('data/raw_train.csv')
 df.drop(columns=['Id'], inplace=True)
 df.head()
 
-#leemos dataset de test
+# leemos dataset de test
 df_test = pd.read_csv('data/raw_inference.csv')
 df_test.drop(columns=['Id'], inplace=True)
 
@@ -77,34 +72,37 @@ df.info()
 df_test.info()
 
 # %%
-#Podemos observar que hay varias columnas con datos nulos, pero podemos limpiarlas al reemplazarlas
-#por 0 o con N/As dadas las descripciones de las columnas
-number_columns = df.select_dtypes(include=['float','int']).columns.drop('SalePrice')
+# Podemos observar que hay varias columnas con datos nulos, pero podemos
+# limpiarlas al reemplazarlas por 0 o con N/As dadas las descripciones
+# de las columnas
+number_columns = df.select_dtypes(include=['float', 'int']).columns.\
+   drop('SalePrice')
 object_columns = df.select_dtypes(include=['object']).columns
 
 df[number_columns] = df[number_columns].fillna(0)
 df[object_columns] = df[object_columns].fillna("N/A")
 
-#Para test
+# Para test
 df_test[number_columns] = df_test[number_columns].fillna(0)
 df_test[object_columns] = df_test[object_columns].fillna("N/A")
 
 # %%
-#Verificamos
+# Verificamos
 df.info()
 
 # %%
 df_test.info()
 
 # %%
-#Aplicamos transformacion OrdinalEncoder para datos categoricos
+# Aplicamos transformacion OrdinalEncoder para datos categoricos
 
 # Concatenar df y df_test
 combined_df = pd.concat([df, df_test])
 
 # Ajustar el encoder en el dataset combinado
 encoder = OrdinalEncoder()
-combined_df[object_columns] = encoder.fit_transform(combined_df[object_columns])
+combined_df[object_columns] = encoder.\
+   fit_transform(combined_df[object_columns])
 
 # Transformar ambos df y df_test
 df[object_columns] = encoder.transform(df[object_columns])
@@ -119,6 +117,6 @@ df.head()
 df_test.head()
 
 # %%
-#Creamos csvs de la data limpia
+# Creamos csvs de la data limpia
 df.to_csv('data/clean_train.csv', index=False)
 df_test.to_csv('data/clean_inference.csv', index=False)
