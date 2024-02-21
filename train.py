@@ -1,3 +1,47 @@
+"""
+Script: train.py
+
+Este script se encarga de entrenar un modelo de regresión lineal utilizando datos limpios preparados con el script 'prep.py'.
+Incluye la separación de conjuntos de entrenamiento y prueba, estandarización de variables, entrenamiento del modelo y evaluación
+de su rendimiento en los conjuntos de entrenamiento y prueba. Además, se guardan los resultados y el modelo entrenado.
+
+Uso:
+1. Se requiere haber ejecutado 'prep.py' previamente para obtener los conjuntos de datos limpios.
+2. Ejecutar este script para entrenar el modelo de regresión lineal.
+3. Los resultados del rendimiento del modelo se mostrarán en la consola y se guardarán en results_df.
+4. El modelo entrenado y el objeto StandardScaler se guardarán en el directorio 'artifacts' como 'model.joblib' y 'std.joblib' respectivamente.
+
+Funciones:
+1. cargar_datos_limpios():
+   - Lee el conjunto de datos limpio 'clean_train.csv'.
+
+2. separar_entrenamiento_prueba(X, Y):
+   - Separa las variables independientes (X) y la variable dependiente (Y) en conjuntos de entrenamiento y prueba.
+
+3. estandarizar_variables(train_X, test_X):
+   - Estandariza las variables utilizando StandardScaler.
+
+4. entrenar_modelo(train_X_std, train_Y):
+   - Entrena un modelo de regresión lineal en las variables estandarizadas y la variable dependiente de entrenamiento.
+
+5. evaluar_modelo(model, train_X_std, test_X_std, train_Y, test_Y):
+   - Evalúa el rendimiento del modelo en los conjuntos de entrenamiento y prueba.
+
+6. graficar_predicciones(train_Y, y_train_pred, test_Y, y_test_pred):
+   - Grafica las predicciones del modelo en los conjuntos de entrenamiento y prueba.
+
+7. guardar_modelo(model, std):
+   - Guarda el modelo entrenado y el objeto StandardScaler en el directorio 'artifacts'.
+
+Dependencias:
+- numpy
+- pandas
+- matplotlib
+- seaborn
+- scikit-learn
+- joblib
+"""
+
 # %%
 #Importamos librerias
 import numpy as np

@@ -1,3 +1,42 @@
+"""
+Script: prep.py
+
+Este script está diseñado para preparar y limpiar conjuntos de datos para una tarea de regresión, específicamente para la competencia de Kaggle
+"Housing Prices: Advanced Regression Techniques" (https://www.kaggle.com/c/house-prices-advanced-regression-techniques).
+
+El script incluye funciones para importar datos, manejar valores faltantes, codificar características categóricas usando
+OrdinalEncoder, y guardar los conjuntos de datos limpios como archivos CSV.
+
+Uso:
+1. Descarga los datos de la competencia desde: https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/
+2. Coloca los archivos 'raw_train.csv' y 'raw_inference.csv' en el directorio 'data'.
+3. Ejecuta el script para limpiar y preparar los datos.
+4. Los conjuntos de datos limpios 'clean_train.csv' y 'clean_inference.csv' se guardarán en el directorio 'data'.
+
+Funciones:
+1. importar_datos():
+   - Lee los conjuntos de datos de entrenamiento y de inferencia en bruto.
+   - Elimina la columna 'Id' de ambos conjuntos de datos.
+
+2. manejar_valores_faltantes(df, df_test):
+   - Maneja valores faltantes en el DataFrame de entrada y en el DataFrame para inferencia.
+   - Rellena las columnas numéricas con 0 y las columnas categóricas con "N/A".
+
+3. codificar_caracteristicas_ordinarias(df, df_test):
+   - Aplica OrdinalEncoder a las características categóricas en el DataFrame de entrada y en el DataFrame para inferencia.
+   - Concatena ambos DataFrames, ajusta el codificador en el conjunto de datos combinado y transforma ambos DataFrames.
+
+4. guardar_conjuntos_datos_limpios(df, df_test):
+   - Guarda los conjuntos de datos de entrenamiento e inferencia limpios como 'clean_train.csv' y 'clean_inference.csv'.
+
+Dependencias:
+- numpy
+- pandas
+- matplotlib
+- seaborn
+- scikit-learn
+"""
+
 # %%
 #Importamos librerias
 import numpy as np
