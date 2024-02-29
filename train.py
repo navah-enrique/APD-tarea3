@@ -49,6 +49,7 @@ Dependencias:
 - matplotlib
 - scikit-learn
 - joblib
+- yaml
 """
 
 # %%
@@ -60,10 +61,23 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error
 import joblib
+import yaml
+
+# Abrimos yaml
+with open("config.yaml", "r") as file:
+    config = yaml.safe_load(file)
+
+# usamos argparse para inputs y outputs
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('input_train') #clean_train
+parser.add_argument('output_modelo') #model
+parser.add_argument('output_scaler') #std
+args = parser.parse_args()
 
 # %%
 # Guardamos dataframes desde los datos ya limpios
-df = pd.read_csv('data/clean_train.csv')
+df = pd.read_csv(f'data/{args.input_train}.csv')
 df.head()
 
 # %%
@@ -71,7 +85,7 @@ df.head()
 X = df.drop(['SalePrice'], axis=1)
 Y = df['SalePrice']
 Train_X, Test_X, Train_Y, Test_Y = \
-   train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=100)
+   train_test_split(X, Y, train_size=config['modeling']['train_size'], test_size=config['modeling']['test_size'], random_state=100)
 
 # %%
 # Estandarizamos las variables.
@@ -145,6 +159,6 @@ plt.show()
 
 # %%
 # Guardamos modelo
-joblib.dump(model, 'artifacts/model.joblib')
+joblib.dump(model, f'artifacts/{args.output_modelo}.joblib')
 # Guardamos scaler
-joblib.dump(std, 'artifacts/std.joblib')
+joblib.dump(std, f'artifacts/{args.output_scaler}.joblib')

@@ -13,9 +13,12 @@ codificar características categóricas usando OrdinalEncoder, y guardar los
 Uso:
 1. Descarga los datos de la competencia desde:
 https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/
+El archivo "train" será 'raw_train.csv'
+y "test" servirá como 'raw_inference.csv'.
 2. Coloca los archivos 'raw_train.csv' y 'raw_inference.csv'
 en el directorio 'data'.
-3. Ejecuta el script para limpiar y preparar los datos.
+3. Ejecuta el script con el argparse de los inputs y outputs
+para limpiar y preparar los datos.
 4. Los conjuntos de datos limpios 'clean_train.csv' y 'clean_inference.csv'
 se guardarán en el directorio 'data'.
 
@@ -54,12 +57,22 @@ from sklearn.preprocessing import OrdinalEncoder
 # (en la fuente ya vienen separados los archivos de entrenamiento y de test)
 # La data se puede descargar desde
 # https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/
-df = pd.read_csv('data/raw_train.csv')
-df.drop(columns=['Id'], inplace=True)
-df.head()
 
+# usamos argparse para inputs y outputs
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('input_train')
+parser.add_argument('input_inference')
+parser.add_argument('output_train')
+parser.add_argument('output_inference')
+args = parser.parse_args()
+
+# leemos dataset de train
+df = pd.read_csv(f'data/{args.input_train}.csv')
 # leemos dataset de test
-df_test = pd.read_csv('data/raw_inference.csv')
+df_test = pd.read_csv(f'data/{args.input_inference}.csv')
+
+df.drop(columns=['Id'], inplace=True)
 df_test.drop(columns=['Id'], inplace=True)
 
 # %% [markdown]
@@ -118,5 +131,5 @@ df_test.head()
 
 # %%
 # Creamos csvs de la data limpia
-df.to_csv('data/clean_train.csv', index=False)
-df_test.to_csv('data/clean_inference.csv', index=False)
+df.to_csv(f'data/{args.output_train}.csv', index=False)
+df_test.to_csv(f'data/{args.output_inference}.csv', index=False)
