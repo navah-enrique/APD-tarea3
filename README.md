@@ -33,7 +33,7 @@ La estructura del repositorio es como sigue:
 - Ejecutar los 3 scripts en el siguiente orden: prep.py, train.py, inference.py
 
 ## Arquitectura ##
-
+![Arquitectura](MGE_T5.png)
 
 
 
