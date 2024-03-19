@@ -31,3 +31,9 @@ La estructura del repositorio es como sigue:
 - Clonar este repositorio
 - Descargar los datos de entrenamiento y de test desde https://www.kaggle.com/c/house-prices-advanced-regression-techniques y guardarlos en la carpeta 'data' como raw_train.csv y raw_inference respectivamente.
 - Ejecutar los 3 scripts en el siguiente orden: prep.py, train.py, inference.py
+
+## Arquitectura ##
+
+
+
+
